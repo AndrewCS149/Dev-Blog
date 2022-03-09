@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace Dev_Blog.Services
 {
+    // TODO: streamline this fine. Maybe join the two tables?
     public class VoteRepository : IVoteRepository
     {
         private AppDbContext _db;
@@ -15,6 +16,11 @@ namespace Dev_Blog.Services
         {
             _db = context;
         }
+
+        //public async Task<VoteModel> Vote()
+        //{
+
+        //}
 
         /// <summary>
         /// Adds an up vote
