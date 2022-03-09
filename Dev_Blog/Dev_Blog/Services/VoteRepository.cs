@@ -7,7 +7,6 @@ using System.Threading.Tasks;
 
 namespace Dev_Blog.Services
 {
-    // TODO: streamline this fine. Maybe join the two tables?
     public class VoteRepository : IVoteRepository
     {
         private AppDbContext _db;
@@ -17,11 +16,6 @@ namespace Dev_Blog.Services
             _db = context;
         }
 
-        //public async Task<VoteModel> Vote()
-        //{
-
-        //}
-
         /// <summary>
         /// Adds an up vote
         /// </summary>
@@ -29,23 +23,20 @@ namespace Dev_Blog.Services
         /// <returns>Successful completion of task</returns>
         public async Task<UpVoteModel> UpVote(int postId, string username)
         {
-            var downVote = await _db.DownVote.Where(x => x.PostModelId == postId &&
-                          x.UserName == username)
-                           .FirstOrDefaultAsync();
-
-            var upVote = await _db.UpVote.Where(v => v.PostModelId == postId &&
-                          v.UserName == username)
-                           .FirstOrDefaultAsync();
-
-            if (downVote != null)
-                _db.Remove(downVote);
-            else if (upVote != null)
+            // check if user has already upvoted, if so, remove upvote and return
+            var upVote = await _db.UpVote.Where(x => x.UserName == username).FirstOrDefaultAsync();
+            if (upVote != null)
             {
                 _db.Remove(upVote);
                 await _db.SaveChangesAsync();
                 return null;
             }
 
+            // check if user has already downvoted, if so, remove downvote
+            var downVote = await _db.DownVote.Where(x => x.UserName == username).FirstOrDefaultAsync();
+            if (downVote != null) _db.Remove(downVote);
+
+            // create new vote and add to db
             var newVote = new UpVoteModel()
             {
                 PostModelId = postId,
@@ -64,22 +55,21 @@ namespace Dev_Blog.Services
         /// <returns>Successful completion of task</returns>
         public async Task<DownVoteModel> DownVote(int postId, string username)
         {
-            var downVote = await _db.DownVote.Where(x => x.PostModelId == postId &&
-                          x.UserName == username)
-                           .FirstOrDefaultAsync();
+            // check if user has already downvoted, if so, remove downvote and return
+            var downVote = await _db.DownVote.Where(x => x.UserName == username).FirstOrDefaultAsync();
 
-            var upVote = await _db.UpVote.Where(v => v.PostModelId == postId &&
-                          v.UserName == username)
-                           .FirstOrDefaultAsync();
-
-            if (upVote != null)
-                _db.Remove(upVote);
-            else if (downVote != null)
+            if (downVote != null)
             {
                 _db.Remove(downVote);
                 await _db.SaveChangesAsync();
                 return null;
             }
+
+            // check if user has already upvoted, if so, remove upvote
+            var upVote = await _db.UpVote.Where(x => x.UserName == username).FirstOrDefaultAsync();
+            if (upVote != null) _db.Remove(upVote);
+
+            // create new vote and add to db
             var newVote = new DownVoteModel()
             {
                 PostModelId = postId,
