@@ -17,12 +17,12 @@ namespace Dev_Blog
 
     public class Startup
     {
-        private IConfiguration _config;
+        //private IConfiguration _config;
 
-        public Startup(IConfiguration config)
-        {
-            _config = config;
-        }
+        //public Startup(IConfiguration config)
+        //{
+        //    _config = config;
+        //}
 
         public void ConfigureServices(IServiceCollection services)
         {
@@ -34,12 +34,14 @@ namespace Dev_Blog
 
             services.AddDbContext<AppDbContext>(options =>
             {
-                options.UseMySql(_config.GetConnectionString("DB"), new MySqlServerVersion(new Version(8, 0, 11)));
+                //options.UseMySql(_config.GetConnectionString("DB"), new MySqlServerVersion(new Version(8, 0, 11)));
+                options.UseMySql(Environment.GetEnvironmentVariable("DBSTRING"), new MySqlServerVersion(new Version(8, 0, 11)));
             });
 
             services.AddDbContext<UserDbContext>(options =>
             {
-                options.UseMySql(_config.GetConnectionString("UserDB"), new MySqlServerVersion(new Version(8, 0, 11)));
+                //options.UseMySql(_config.GetConnectionString("UserDB"), new MySqlServerVersion(new Version(8, 0, 11)));
+                options.UseMySql(Environment.GetEnvironmentVariable("USERDBSTRING"), new MySqlServerVersion(new Version(8, 0, 11)));
             });
 
             services.AddIdentity<UserModel, IdentityRole>()

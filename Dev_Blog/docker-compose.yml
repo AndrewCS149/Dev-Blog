@@ -1,0 +1,21 @@
+version: '3.4'
+
+services:
+    dev-blog:
+        image: devblog
+        build:
+            context: .
+            dockerfile: Dockerfile
+        ports:
+            - 8080:80
+        environment:
+            USERDBSTRING: "server=64.227.94.161;database=devbloguserdb;user=DevMaster;password=LOGI17box!"
+            DBSTRING: "server=64.227.94.161;database=devblogdb;user=DevMaster;password=LOGI17box!"
+            SENDGRIDWELCOMETEMPLATE: "d-e76f2e3fd545492f9287ea3d388ad4e2"
+            SENDGRIDNEWPOSTTEMPLATE: "d-e11032aa7fea4ed18c747e460ca70a76"
+            SENDGRIDAPIKEY: "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"
+            SENDGRIDACCOUNTNAME: "DevBlog"
+            DROPBOXTOKEN: "kzVqepTM5JIAAAAAAAAAAWDV_xjz3dT2EK9FmYs7x3Cq_5d2ofpI0q6nyuyt1GRA"
+            DROPBOXDESTINATIONPATH: "/Devblog/"
+            ADMINUSERNAME: "DevMaster"
+            ADMINPASSWORD: "Loki2020!"
