@@ -27,10 +27,6 @@ namespace Dev_Blog.Services
         public async Task<PostModel> Create(PostModel post, string url)
         {
             post.ImgURL = url;
-
-            //TODO: change to datetimeoffset.utcnow
-            //post.Date = DateTimeOffset.UtcNow;
-
             post.Date = DateTime.Now;
 
             var newPost = _db.Post.Add(post).Entity;
@@ -45,13 +41,11 @@ namespace Dev_Blog.Services
         /// <returns>List<PostModel></returns>
         public async Task<List<PostModel>> GetAll()
         {
-            var posts = await _db.Post.OrderByDescending(x => x.Date)
+            return await _db.Post.OrderByDescending(x => x.Date)
                                       .Include(x => x.Comments)
                                       .Include(x => x.UpVotes)
                                       .Include(x => x.DownVotes)
                                       .ToListAsync();
-
-            return posts;
         }
 
         /// <summary>
@@ -61,12 +55,11 @@ namespace Dev_Blog.Services
         /// <returns>PostModel</returns>
         public async Task<PostModel> Get(int postId)
         {
-            var post = await _db.Post.Include(x => x.Comments)
+            return await _db.Post.Include(x => x.Comments)
                                      .Include(x => x.UpVotes)
                                      .Include(x => x.DownVotes)
                                      .Where(p => p.Id == postId)
                                      .FirstOrDefaultAsync();
-            return post;
         }
 
         /// <summary>
