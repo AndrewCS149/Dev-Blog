@@ -55,9 +55,7 @@ namespace Dev_Blog.Services
         /// <returns>List<CommentModel></returns>
         public async Task<List<CommentModel>> GetComments()
         {
-            var comments = await _db.Comment.OrderByDescending(x => x.Date)
-                                            .ToListAsync();
-            return comments;
+            return await _db.Comment.OrderByDescending(x => x.Date).ToListAsync();
         }
 
         /// <summary>
@@ -67,9 +65,7 @@ namespace Dev_Blog.Services
         /// <returns>CommentModel</returns>
         public async Task<CommentModel> GetComment(int commentId)
         {
-            var comment = await _db.Comment.Where(c => c.Id == commentId)
-                                           .FirstOrDefaultAsync();
-            return comment;
+            return await _db.Comment.Where(c => c.Id == commentId).FirstOrDefaultAsync();
         }
 
         /// <summary>
