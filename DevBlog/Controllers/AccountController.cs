@@ -1,9 +1,7 @@
 ﻿using DevBlog.Interfaces;
 using DevBlog.Models;
-using System.Linq;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 //using static DevBlog.Pages.Modals.Register;
 
 namespace DevBlog.Controllers
