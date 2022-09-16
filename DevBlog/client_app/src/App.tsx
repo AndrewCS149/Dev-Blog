@@ -1,4 +1,4 @@
-import { Header, About, Posts, Home } from './components/common';
+import { Header, About, Posts, Home, Login, SignUp } from './components/common';
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import './App.css';
 
@@ -11,6 +11,8 @@ function App() {
                     <Route path="/" element={<Home />} />
                     <Route path="/about" element={<About />} />
                     <Route path="/posts" element={<Posts />} />
+                    <Route path="/login" element={<Login />} />
+                    <Route path="/signup" element={<SignUp />} />
                 </Routes>
             </div>
         </BrowserRouter>

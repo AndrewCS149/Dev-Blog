@@ -13,9 +13,6 @@ const Header = () => {
             <div className="header-nav">
                 <Navbar />
             </div>
-            <div>
-                Login SignUp
-            </div>
         </div>
     )
 }
