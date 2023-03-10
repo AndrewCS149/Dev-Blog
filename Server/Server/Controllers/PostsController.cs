@@ -28,9 +28,9 @@ namespace Server.Controllers
         }
 
         /// <summary>
-        /// Retrieves all posts
+        /// Retrieves specified post
         /// </summary>
-        /// <returns>List<Post></returns>
+        /// <returns>Post</returns>
         [HttpGet("{id}")]
         public async Task<Post> Get(int id)
         {
