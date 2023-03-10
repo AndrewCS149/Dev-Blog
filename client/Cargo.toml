@@ -1,0 +1,17 @@
+[package]
+name = "client"
+version = "0.1.0"
+edition = "2021"
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+
+[dependencies]
+chrono = "0.4.23"
+js-sys = "0.3.61"
+reqwasm = "0.5.0"
+serde = {version = "1.0.154", features=["derive"]}
+serde_json = "1.0.94"
+wasm-bindgen-futures = "0.4.34"
+web-sys = "0.3.61"
+yew = {version = "0.20.0", features = ["csr"]}
+yew-router = "0.17.0"
