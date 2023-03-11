@@ -46,7 +46,6 @@ namespace Server.Controllers
         /// </summary>
         /// <param name="id">comment Id</param>
         /// <returns>Successful completion of task</returns>
-        [Authorize]
         [HttpDelete("{id}")]
         public async Task Delete(int id)
         {

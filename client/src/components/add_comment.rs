@@ -19,7 +19,7 @@ pub struct NewComment {
 #[derive(Clone, PartialEq, Properties)]
 pub struct Props {
     pub postId: i32,
-    pub on_add_comment: Callback<i8>,
+    pub on_add: Callback<i32>,
 }
 
 #[function_component]
@@ -36,23 +36,22 @@ pub fn AddComment(props: &Props) -> Html {
 
         wasm_bindgen_futures::spawn_local({
             async move {
-                let new_comment = CommentProps {
+                let new_comment = NewComment {
                     content: comment.content,
                     userName: "user123".to_string(),
                     postId: cloned_props.postId,
-                    date: "".to_string(),
                 };
 
-                let req = Request::post("https://localhost:7123/api/comments")
+                let res = Request::post("https://localhost:7123/api/comments")
                     .header("Content-Type", "application/json")
                     .body(serde_json::to_string(&new_comment).unwrap())
                     .send()
                     .await;
 
-                match req {
+                match res {
                     Ok(_) => {
                         // tell parent component (posts.rs) that a new comment has been added
-                        cloned_props.on_add_comment.emit(1);
+                        cloned_props.on_add.emit(1);
                     }
                     Err(_) => console::log_1(&JsValue::from("Failed to create comment")),
                 }

@@ -1,7 +1,6 @@
 use js_sys::JsString;
 use reqwasm::http::Request;
 use serde::Deserialize;
-use std::borrow::Borrow;
 use std::ops::Deref;
 use wasm_bindgen::JsValue;
 use web_sys::console;
@@ -10,6 +9,7 @@ use yew::prelude::*;
 
 use crate::components::add_comment::AddComment;
 use crate::components::comment::*;
+use crate::components::delete_comment::DeleteComment;
 
 #[derive(Deserialize, Clone, PartialEq, Properties)]
 pub struct PostProps {
@@ -39,7 +39,8 @@ pub fn Post(props: &PostProps) -> Html {
     let comments_state = use_state(|| props.comments.to_owned());
     let comments = comments_state.clone();
     let post_id = use_state(|| props.id.clone());
-    let change = use_state(|| 0);
+    let change_add = use_state(|| 0);
+    let change_delete = use_state(|| 0);
 
     // refresh comments if a new comment has been added
     use_effect_with_deps(
@@ -59,18 +60,21 @@ pub fn Post(props: &PostProps) -> Html {
                         .unwrap();
 
                     comments_state.set(serde_json::from_str(&data).unwrap());
-                    // console::log_1(&JsString::from(data));
+                    console::log_1(&JsString::from(data));
                 }
             });
         },
-        change.clone(),
+        (change_add.clone(), change_delete.clone()),
     );
 
-    let on_add_comment = Callback::from(move |_| {
-        let val = change.deref().clone();
-        change.set(val + 1);
-        // let json = serde_json::to_string(&all_comments).unwrap();
-        // console::log_1(&JsValue::from(json));
+    let on_add = Callback::from(move |_| {
+        let val = change_add.deref().clone();
+        change_add.set(val + 1);
+    });
+
+    let on_delete = Callback::from(move |_| {
+        let val = change_delete.deref().clone();
+        change_delete.set(val + 1);
     });
 
     html! {
@@ -84,16 +88,20 @@ pub fn Post(props: &PostProps) -> Html {
             <p>{&props.description}</p>
 
             <div>
-                {for comments.iter().map(|comment| html! {
+            {for comments.iter().map(|comment| html! {
+                <div>
+                    <DeleteComment id={comment.id} on_delete={on_delete.clone()}/>
                     <Comment
+                        id={comment.id}
                         postId={props.id}
                         content={comment.content.clone()}
                         date={comment.date.clone()}
                         userName={comment.userName.clone()}
                     />
+                    </div>
                 })}
             </div>
-            <AddComment postId={props.id} on_add_comment={on_add_comment}/>
+            <AddComment postId={props.id} on_add={on_add}/>
         </div>
     }
 }
