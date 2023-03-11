@@ -2,6 +2,7 @@ use serde::Deserialize;
 use yew::html::Properties;
 use yew::prelude::*;
 
+use crate::components::add_comment::AddComment;
 use crate::components::comment::*;
 
 #[derive(Deserialize, Clone, PartialEq, Properties)]
@@ -29,6 +30,8 @@ impl Default for PostProps {
 
 #[function_component]
 pub fn Post(props: &PostProps) -> Html {
+    let comments = use_state(|| props.comments.to_owned());
+
     html! {
         <div>
             <div>
@@ -49,6 +52,7 @@ pub fn Post(props: &PostProps) -> Html {
                     />
                 })}
             </div>
+            <AddComment />
         </div>
     }
 }

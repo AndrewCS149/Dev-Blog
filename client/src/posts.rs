@@ -15,7 +15,7 @@ pub fn posts() -> Html {
             let posts = posts.clone();
 
             async move {
-                let data = Request::get(&"https://localhost:7123/api/posts")
+                let data = Request::get("https://localhost:7123/api/posts")
                     .send()
                     .await
                     .unwrap()

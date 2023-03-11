@@ -1,7 +1,7 @@
-use serde::Deserialize;
+use serde::{Deserialize, Serialize};
 use yew::prelude::*;
 
-#[derive(Deserialize, Clone, PartialEq, Properties)]
+#[derive(Deserialize, Clone, PartialEq, Properties, Serialize)]
 pub struct CommentProps {
     pub id: i32,
     pub content: String,

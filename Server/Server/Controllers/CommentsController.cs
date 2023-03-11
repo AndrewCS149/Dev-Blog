@@ -21,7 +21,7 @@ namespace Server.Controllers
         /// </summary>
         /// <param name="comment">The comment to add</param>
         /// <returns>Comment</returns>
-        [Authorize]
+        //[Authorize]
         [HttpPost]
         public async Task<Comment> Create(Comment comment)
         {
