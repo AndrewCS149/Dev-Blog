@@ -17,6 +17,18 @@ namespace Server.Controllers
         }
 
         /// <summary>
+        /// Retrieves all comments  for a specified posts
+        /// </summary>
+        /// <param name="postId">Post Id</param>
+        /// <returns>List<Comment></returns>
+        [HttpGet("post/{postId}")]
+        public async Task<List<Comment>> GetAllForPost(int postId)
+        {
+            var comments = await _comments.GetAllForPost(postId);
+            return comments;
+        }
+
+        /// <summary>
         /// Adds a comment
         /// </summary>
         /// <param name="comment">The comment to add</param>

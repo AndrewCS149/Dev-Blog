@@ -28,6 +28,13 @@ namespace Server.Interfaces
         Task<Comment> Get(int id);
 
         /// <summary>
+        /// Retrieves all comments for a specified post
+        /// </summary>
+        /// <param name="postId">Post Id</param>
+        /// <returns>List<Comment></returns>
+        Task<List<Comment>> GetAllForPost(int postId);
+
+        /// <summary>
         /// Deletes a specified comment
         /// </summary>
         /// <param name="commentId">Comment Id</param>

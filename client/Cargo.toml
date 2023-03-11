@@ -11,6 +11,7 @@ js-sys = "0.3.61"
 reqwasm = "0.5.0"
 serde = {version = "1.0.154", features=["derive"]}
 serde_json = "1.0.94"
+wasm-bindgen = "0.2.84"
 wasm-bindgen-futures = "0.4.34"
 web-sys = "0.3.61"
 yew = {version = "0.20.0", features = ["csr"]}

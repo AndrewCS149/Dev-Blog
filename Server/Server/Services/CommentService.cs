@@ -48,6 +48,17 @@ namespace Server.Services
         }
 
         /// <summary>
+        /// Retrieves all comments  for a specified post
+        /// </summary>
+        /// <param name="postId">Post Id</param>
+        /// <returns>List<Comment></returns>
+        public async Task<List<Comment>> GetAllForPost(int postId)
+        {
+            var comments = await _db.Comment.Where(c => c.PostId == postId).ToListAsync();
+            return comments;
+        }
+
+        /// <summary>
         /// Retrieves a specified comment
         /// </summary>
         /// <param name="commentId">Comment Id</param>

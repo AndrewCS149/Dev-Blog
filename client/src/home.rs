@@ -23,7 +23,7 @@ pub fn home() -> Html {
                     .unwrap();
 
                 post.set(serde_json::from_str(&data).unwrap());
-                console::log_1(&JsString::from(data));
+                // console::log_1(&JsString::from(data));
             }
         });
     }

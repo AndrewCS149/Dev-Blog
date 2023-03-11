@@ -6,8 +6,8 @@ use yew::prelude::*;
 use crate::components::post::*;
 
 // gets all posts from API
-#[function_component(Posts)]
-pub fn posts() -> Html {
+#[function_component]
+pub fn Posts() -> Html {
     let posts = use_state(|| Vec::<PostProps>::new());
 
     if posts.is_empty() {
@@ -24,7 +24,7 @@ pub fn posts() -> Html {
                     .unwrap();
 
                 posts.set(serde_json::from_str(&data).unwrap());
-                console::log_1(&JsString::from(data));
+                // console::log_1(&JsString::from(data));
             }
         });
     }
