@@ -1,0 +1,33 @@
+div:root {
+    height: 45px;
+}
+
+.pager:first-child {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.pager:last-child {
+    display: flex;
+    margin-bottom: 50px;
+}
+
+.pager span {
+    font-family: 'Chivo Mono', monospace;
+    font-size: 20px;
+    line-height: 35px;
+}
+
+.arrow-hidden {
+    visibility: hidden;
+}
+
+.pager svg {
+    height: 35;
+    opacity: 0.7;
+}
+
+.pager svg:hover {
+    cursor: pointer;
+    opacity: 1.0;
+}

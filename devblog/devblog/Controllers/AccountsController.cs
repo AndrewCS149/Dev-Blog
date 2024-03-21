@@ -18,11 +18,13 @@ namespace devblog.Controllers
         public SignInManager<User> _signInMgr { get; }
         public UserManager<User> _userMgr { get; }
         public IConfiguration _config;
+        private readonly INotificationService _notifications;
         private readonly IUsernameService _username;
         private readonly IEmailService _email;
 
-        public AccountsController(SignInManager<User> signInMgr, UserManager<User> usermgr, IConfiguration config, IUsernameService username, IEmailService email)
+        public AccountsController(INotificationService notifications, SignInManager<User> signInMgr, UserManager<User> usermgr, IConfiguration config, IUsernameService username, IEmailService email)
         {
+            _notifications = notifications;
             _userMgr = usermgr;
             _signInMgr = signInMgr;
             _config = config;
@@ -63,8 +65,8 @@ namespace devblog.Controllers
         /// Returns all user's usernames and emails
         /// </summary>
         [Authorize(Roles = "Admin")]
-        [HttpGet("count")]
-        public async Task<List<UserInfo>> GetUsersCount()
+        [HttpGet]
+        public async Task<List<UserInfo>> GetUsers()
         {
             var users = await _userMgr.Users
                 .Select(u => new UserInfo
@@ -78,43 +80,39 @@ namespace devblog.Controllers
             return users;
         }
 
-        public class UserInfo
-        {
-            public string? UserName { get; set; }
-            public string? Email { get; set; }
-            public bool Subscribed { get; set; }
-        }
-
         /// <summary>
         /// Delete an account
         /// </summary>
         /// <param name="username"></param>
         [Authorize(Roles = "Visitor")]
-        [HttpDelete("{username}")]
-        public async Task<IActionResult> DeleteAccount(string username)
+        [HttpDelete]
+        public async Task<IActionResult> DeleteAccount()
         {
             // get current user
+            var username = User.FindFirstValue("username");
             User user = _userMgr.Users.Where(x => x.NormalizedUserName == username).FirstOrDefault();
 
             if (user != null)
             {
-                // sign current user out and delete account
+                // sign current user out and delete account & notifications
+                await _notifications.DeleteAllForUser(username);
                 await _signInMgr.SignOutAsync();
                 await _userMgr.DeleteAsync(user);
-                return Redirect("/");
+                return Ok();
             }
 
-            return Redirect("/");
+            return BadRequest(new { error = "Error attempting to delete account." });
         }
 
         [Authorize(Roles = "Admin")]
-        [HttpDelete("admin/{username}")]
+        [HttpDelete("adminDelete/{username}")]
         public async Task AdminDeleteAccount(string username)
         {
             User user = _userMgr.Users.Where(x => x.NormalizedUserName == username).FirstOrDefault();
 
             if (user != null)
             {
+                await _notifications.DeleteAllForUser(username);
                 await _userMgr.DeleteAsync(user);
             }
         }
@@ -131,13 +129,11 @@ namespace devblog.Controllers
 
             if (user == null || !await _userMgr.CheckPasswordAsync(user, signIn.Password))
             {
-                return BadRequest(new { error = "Invalid userName or password" });
+                return BadRequest(new { description = "Invalid username or password", code = "" });
             }
             else
             {
-                //var res = await _signInMgr.PasswordSignInAsync(signIn.Password, signIn.Username, true, false);
                 var res = await _signInMgr.PasswordSignInAsync(user, signIn.Password, true, false);
-
                 var claims = await GenerateClaims(user);
                 var token = GenerateToken(claims);
 
@@ -147,10 +143,13 @@ namespace devblog.Controllers
                     {
                         token = new JwtSecurityTokenHandler().WriteToken(token),
                         expiration = token.ValidTo,
+                        username = user.UserName.Normalize(),
+                        authenticated = true,
+                        admin = await _userMgr.IsInRoleAsync(user, "Admin"),
                     });
                 }
                 else
-                    return BadRequest(new { error = "Unable to sign in. Please try again" });
+                    return BadRequest(new { description = "Unable to sign in. Please try again", code = "" });
 
             }
         }
@@ -159,12 +158,20 @@ namespace devblog.Controllers
         /// Signs out the currently sign in user
         /// </summary>
         /// <returns>Task<IActionResult></returns>
-        [Authorize]
+        //[Authorize]
         [HttpPost("signout")]
         public async Task<IActionResult> LogOut()
         {
             await _signInMgr.SignOutAsync();
-            return Ok();
+
+            return Ok(new
+            {
+                token = "",
+                expiration = "",
+                username = "",
+                authenticated = false,
+                admin = false,
+            });
         }
 
         /// <summary>
@@ -172,32 +179,26 @@ namespace devblog.Controllers
         /// </summary>
         /// <param name="user">New user to add</param>
         /// <returns>Task<IActionResult></returns>
-        [HttpPost]
+        [HttpPost("signup")]
         public async Task<IActionResult> SignUp(User user)
         {
+            var errors = new List<IdentityError>();
+
             // verify unique username
             var userName = await _username.Exists(user.UserName.Normalize());
-
             if (userName)
             {
                 var error = new IdentityError();
-                error.Description = "Username already exists";
-
-                return BadRequest(new { errors = new List<IdentityError>() { error } });
+                error.Description = $"Username '{user.UserName}' is already taken.";
+                errors.Add(error);
             }
 
             // verify unique email
             var email = _userMgr.Users.Where(x => x.NormalizedEmail == user.Email.Normalize()).FirstOrDefault();
-            if (email != null)
-            {
-                var error = new IdentityError();
-                error.Description = "Email already exists";
 
-                return BadRequest(new { errors = new List<IdentityError>() { error } });
-            }
-
+            user.Subscribed = true;
             var res = await _userMgr.CreateAsync(user, user.PasswordHash);
-            if (res.Succeeded)
+            if (res.Succeeded && errors.Count == 0)
             {
                 await _email.Welcome(user.Email);
                 var currentUser = await _userMgr.FindByNameAsync(user.UserName);
@@ -212,11 +213,25 @@ namespace devblog.Controllers
                 return Ok(new
                 {
                     token = new JwtSecurityTokenHandler().WriteToken(token),
-                    expiration = token.ValidTo
+                    expiration = token.ValidTo,
+                    username = user.UserName,
+                    authenticated = true,
+                    admin = false,
                 });
             }
             else
-                return BadRequest(new { errors = res.Errors.ToList() });
+            {
+                errors.AddRange(res.Errors);
+
+                // Ensure to not return 'null' as this will cause front end parsing errors
+                errors.ForEach(e =>
+                {
+                    if (e.Code is null)
+                        e.Code = "";
+                });
+
+                return BadRequest(errors);
+            }
         }
 
 
@@ -250,6 +265,13 @@ namespace devblog.Controllers
             //claims.Add(new Claim(ClaimTypes.Role, userRole));
 
             return claims;
+        }
+
+        public class UserInfo
+        {
+            public string? UserName { get; set; }
+            public string? Email { get; set; }
+            public bool Subscribed { get; set; }
         }
     }
 }

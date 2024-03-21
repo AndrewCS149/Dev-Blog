@@ -1,0 +1,21 @@
+.create-comment {
+    margin-bottom: 20px;
+}
+
+.create-comment form {
+    display: inline-flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.create-comment form input {
+    width: 10em;
+    margin: .5em 0 .5em 0;
+    border: 0 0 1px 0;
+}
+
+.create-comment button {
+    margin-top: .5em;
+    width: fit-content;
+    padding: 8px;
+}

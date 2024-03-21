@@ -1,0 +1,82 @@
+.upload-platforms {
+    background-color: rgb(26, 32, 41);
+    border: .15em solid rgb(70, 68, 60);
+    border-radius: .5em;
+    margin-bottom: 40px;
+    padding: 10px 20px;
+}
+
+.upload-status>h4 p {
+    color: red;
+    margin-left: 30px;
+}
+
+.upload-status>h4 {
+    margin: 0px;
+    font-weight: 100;
+    padding: 0px;
+}
+
+.upload-platforms ul {
+    list-style: none;
+}
+
+.loader {
+    padding: 10px;
+}
+
+.create-post {
+    align-items: center;
+    justify-content: center;
+    margin-top: 150px;
+    justify-self: center;
+    left: 0;
+}
+
+.create-post>form {
+    width: 100%;
+}
+
+.create-post form input {
+    margin-bottom: 1em;
+}
+
+.create-post label,
+button {
+    display: block;
+}
+
+a {
+    color: white;
+}
+
+.new-post-info {
+    background-color: rgb(26, 32, 41);
+    border: .15em solid rgb(70, 68, 60);
+    border-radius: .5em;
+    padding: 10px 20px;
+    margin-bottom: 100px;
+}
+
+.addpost-description {
+    display: flex;
+}
+
+.addpost-description>textarea {
+    width: 100%;
+    min-height: 100px;
+    resize: none;
+    outline: none;
+    font-size: 17;
+    border: none;
+}
+
+.post-preview {
+    padding: 20px;
+    margin-bottom: 20px;
+    min-height: 100px;
+}
+
+.create-post {
+    font-family: 'Chivo Mono', monospace;
+}

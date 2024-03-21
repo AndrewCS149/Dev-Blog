@@ -1,0 +1,25 @@
+.about {
+    margin: 150px 20px 0px 20px;
+    display: flex;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.about>ul {
+    list-style-type: none;
+}
+
+.about>ul>li {
+    font-size: 20px;
+    opacity: .8;
+    padding-bottom: 30px;
+}
+
+.about>ul>li:hover {
+    opacity: 1;
+}
+
+.about>img {
+    border-radius: 2px;
+    width: 50%;
+}

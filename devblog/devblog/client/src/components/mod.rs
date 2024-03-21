@@ -1,0 +1,14 @@
+pub mod comment;
+pub mod comment_add;
+pub mod comment_delete;
+pub mod comment_edit;
+pub mod footer;
+pub mod markdown;
+pub mod navbar;
+pub mod notifications;
+pub mod pager;
+pub mod post;
+pub mod post_delete;
+pub mod post_edit;
+pub mod text_input;
+pub mod vote;

@@ -1,0 +1,72 @@
+:root {
+    --background-secondary: #1a2029;
+    --background-base: #0d1116;
+    --button-color: #28303d;
+    --button-hover: #323d4f;
+    --button-border: grey;
+    --text: white;
+}
+
+:root {
+    background-color: var(--background-base);
+    color: var(--text);
+    overflow-x: hidden;
+    font-family: 'Silkscreen', cursive;
+}
+
+a {
+    color: var(--text);
+}
+
+svg {
+    fill: var(--text);
+}
+
+.post {
+    background-color: var(--background-secondary);
+}
+
+.navbar,
+.footer {
+    background-color: var(--background-secondary);
+}
+
+.comment,
+input,
+textarea,
+button {
+    border: var(--background-base);
+    background-color: var(--background-base);
+    color: var(--text);
+}
+
+button,
+.signup-prompt {
+    text-decoration: none;
+    background-color: var(--button-color);
+    border-radius: 0.5em;
+
+}
+
+button:hover,
+.signup-prompt:hover {
+    background-color: var(--button-hover);
+    cursor: pointer;
+}
+
+.comment,
+.post-info,
+.date,
+.votes span,
+textarea,
+.sign-up-container,
+.sign-in-container,
+.description,
+.description-result,
+button {
+    font-family: 'Chivo Mono', monospace;
+}
+
+.youtube-video {
+    border: 2px solid var(--background-secondary);
+}

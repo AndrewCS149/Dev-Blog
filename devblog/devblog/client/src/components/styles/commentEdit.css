@@ -1,0 +1,23 @@
+.edit-comment-btn svg:hover {
+    cursor: pointer;
+    fill: greenyellow;
+}
+
+.edit-comment-btn svg {
+    height: 12;
+}
+
+.edit-comment-btn {
+    padding: 0px 5px;
+}
+
+.edit-comment textarea,
+.edit-comment button {
+    margin-right: 5px;
+    margin-top: 5px;
+    padding: 8px;
+}
+
+.edit-comment div {
+    display: flex;
+}

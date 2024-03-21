@@ -46,7 +46,6 @@ const Vote = (props: IVoteProps) => {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${localStorage.getItem("token")}`
             },
-            body: JSON.stringify(username)
         }).then((res) => {
             getVotes("upvotes");
             getVotes("downvotes");

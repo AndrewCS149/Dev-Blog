@@ -12,6 +12,7 @@ const context = [
   "/api/accounts",
   "/api/accounts/signin",
   "/api/accounts/signout",
+  "/api/accounts/signup",
   "/api/notifications"
 ];
 

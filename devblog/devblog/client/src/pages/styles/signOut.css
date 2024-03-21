@@ -1,0 +1,18 @@
+/* @import url('https://fonts.googleapis.com/css2?family=Silkscreen&family=Zilla+Slab&display=swap'); */
+
+.logout {
+    border: none;
+    background-color: inherit;
+    opacity: .7;
+    font-family: 'Silkscreen', cursive;
+    margin-left: auto;
+}
+
+.logout:hover {
+    opacity: 1;
+}
+
+.logout {
+    font-size: 16px;
+    padding: 0px;
+}

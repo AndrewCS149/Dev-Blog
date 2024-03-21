@@ -21,8 +21,6 @@ namespace devblog.Data
         {
             base.OnModelCreating(modelBuilder);
 
-            modelBuilder.Entity<Notification>().HasKey(e => new { e.PostId, e.UserName });
-
             modelBuilder.Entity<UpVote>().HasKey(e => new { e.PostId, e.UserName });
 
             modelBuilder.Entity<DownVote>().HasKey(e => new { e.PostId, e.UserName });

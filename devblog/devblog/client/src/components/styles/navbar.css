@@ -1,0 +1,80 @@
+.non-active,
+.accounts a,
+.nav-icon {
+    opacity: 0.8;
+}
+
+.nav-menus-container {
+    display: flex;
+    margin-left: auto;
+}
+
+.nav-drop-down {
+    display: flex;
+    flex-direction: column;
+    margin-right: 20px;
+    z-index: 20;
+}
+
+.nav-drop-down:hover,
+.nav-icon:hover,
+.nav-links span:hover {
+    opacity: 1.0;
+    cursor: pointer;
+}
+
+.nav-links a,
+.nav-links form {
+    text-decoration: none;
+    padding-top: 5px;
+}
+
+.nav-links span.active {
+    text-decoration: underline;
+}
+
+.nav-icon {
+    height: 60;
+    font-size: 17;
+    cursor: pointer;
+    display: flex;
+    margin-top: 7px;
+}
+
+.nav-links {
+    background-color: var(--background-secondary);
+    flex-direction: column;
+    margin-top: 70px;
+    padding: 10px 10px 10px 10px;
+    position: fixed;
+    right: 2px;
+}
+
+.nav-accounts {
+    display: flex;
+    flex-direction: column;
+}
+
+.navbar {
+    top: 0;
+    left: 0;
+    display: flex;
+    height: fit-content;
+    margin: auto;
+    width: 100vw;
+    position: fixed;
+    z-index: 10;
+}
+
+.logo-link {
+    color: white;
+    font-size: 20px;
+    height: fit-content;
+    padding: 10px;
+    text-decoration: none;
+}
+
+.logo {
+    font-size: 38px;
+    padding: 5px;
+}

@@ -1,0 +1,23 @@
+.votes span {
+    margin-right: 8px;
+}
+
+.votes {
+    margin-top: 15px;
+}
+
+.up-vote:hover {
+    fill: yellow;
+    cursor: pointer;
+}
+
+.down-vote:hover {
+    fill: red;
+    cursor: pointer;
+}
+
+.up-vote,
+.down-vote {
+    padding: 5px;
+    height: 30;
+}

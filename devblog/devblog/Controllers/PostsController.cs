@@ -24,8 +24,8 @@ namespace devblog.Controllers
             return pageNum;
         }
 
-        [HttpGet("page/{pageNum}")]
-        public async Task<List<Post>> GetPage(int pageNum)
+        [HttpGet]
+        public async Task<List<Post>> GetPage([FromQuery(Name = "page")] int pageNum)
         {
             var posts = await _posts.GetPage(pageNum);
             return posts;
@@ -35,7 +35,7 @@ namespace devblog.Controllers
         /// Gets the total page count
         /// </summary>
         /// <returns>int</returns>
-        [HttpGet("page/count")]
+        [HttpGet("countPages")]
         public async Task<int> GetPageCount()
         {
             var count = await _posts.GetPageCount();
@@ -46,7 +46,7 @@ namespace devblog.Controllers
         /// Gets the total post count
         /// </summary>
         /// <returns>int</returns>
-        [HttpGet("count")]
+        [HttpGet("countPosts")]
         public async Task<int> GetPostCount()
         {
             int count = await _posts.GetPostCount();

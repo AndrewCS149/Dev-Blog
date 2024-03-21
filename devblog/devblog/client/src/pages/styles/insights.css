@@ -1,0 +1,33 @@
+.insights {
+    font-family: 'Chivo Mono', monospace;
+    margin-top: 150px;
+    overflow-x: auto;
+}
+
+.insights>table {
+    border: .15em solid var(--button-border);
+    opacity: .8;
+    border-radius: .5em;
+    width: 100%;
+}
+
+
+.insights>table th,
+.insights>table td {
+    padding: 15px;
+    text-align: left;
+}
+
+.insights>table>tbody tr:nth-child(odd) {
+    background-color: var(--background-secondary);
+
+}
+
+.insights svg {
+    height: 15;
+}
+
+.insights svg:hover {
+    cursor: pointer;
+    fill: red;
+}

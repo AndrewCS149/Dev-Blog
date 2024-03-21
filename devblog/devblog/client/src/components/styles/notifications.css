@@ -1,0 +1,83 @@
+.bell-icon {
+    opacity: 0.8;
+}
+
+.bell-icon svg {
+    padding-top: 5;
+    height: 30;
+}
+
+.notification-drop-down {
+    font-size: 35px;
+    margin-top: 23px;
+    margin-right: 10px;
+    z-index: 21;
+}
+
+.notifications {
+    display: flex;
+    font-family: 'Chivo Mono', monospace;
+    flex-direction: column;
+    font-size: 15px;
+    right: 10px;
+    background-color: var(--background-secondary);
+    position: absolute;
+    padding: 10px 4px;
+}
+
+.notification-count {
+    background-color: red;
+    font-family: 'Chivo Mono', monospace;
+    font-size: 13px;
+    position: absolute;
+    border-radius: 50%;
+    padding: 5px;
+    line-height: 10px;
+    right: 108px;
+}
+
+.notifications img {
+    height: 50px;
+    width: 60px;
+    border-radius: 0%;
+}
+
+.notifications>div {
+    border-top: 1px solid var(--button-border);
+    display: flex;
+    flex-direction: row;
+}
+
+.notification-txt {
+    display: flex;
+    flex-direction: column;
+}
+
+.notification-txt>span:last-child {
+    font-size: 12px;
+    opacity: 0.8;
+    margin-left: 10px;
+}
+
+.notification-txt span:first-child {
+    padding: 4px;
+    opacity: 0.8;
+    text-decoration: none;
+}
+
+
+.bell-icon:hover,
+.notification-txt>span:last-child:hover,
+.notification-txt span:hover {
+    opacity: 1.0;
+    cursor: pointer;
+}
+
+.notification-item {
+    transition: all 0.3s ease-in;
+}
+
+.dismissed {
+    transform: translateX(100%);
+    opacity: 0;
+}

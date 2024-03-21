@@ -60,7 +60,7 @@ namespace devblog.Services
                 uploadStatus.DevBlogStatus = await _imgs.Create(post.files, res.Id);
 
                 // create notifications and send emails for new post
-                await _notifications.Create(res.Id);
+                await _notifications.CreatePostNotification(res.Id, res.Imgs[0].Url);
                 await _email.NewPost();
             }
 
@@ -96,7 +96,7 @@ namespace devblog.Services
         public async Task<List<Post>> GetPage(int pageNum)
         {
             var posts = await _db.Post.OrderByDescending(x => x.Date)
-                                      .Include(x => x.Comments)
+                                      .Include(x => x.Comments.OrderByDescending(c => c.Id))
                                       .Include(x => x.Imgs)
                                       .Include(x => x.UpVotes)
                                       .Include(x => x.DownVotes)
@@ -117,7 +117,7 @@ namespace devblog.Services
             var posts = await _db.Post.OrderByDescending(x => x.Date).ToListAsync();
             var postIdx = posts.FindIndex(x => x.Id == postId);
 
-            if(postIdx >= 0)
+            if (postIdx >= 0)
             {
                 int pageNum = (postIdx / pageSize) + 1;
                 return pageNum;
@@ -140,7 +140,7 @@ namespace devblog.Services
             if (postId == -1)
             {
                 post = await _db.Post.OrderByDescending(x => x.Date)
-                                         .Include(x => x.Comments)
+                                         .Include(x => x.Comments.OrderByDescending(c => c.Id))
                                          .Include(x => x.Imgs)
                                          .Include(x => x.UpVotes)
                                          .Include(x => x.DownVotes)
@@ -148,7 +148,7 @@ namespace devblog.Services
             }
             else
             {
-                post = await _db.Post.Include(x => x.Comments)
+                post = await _db.Post.Include(x => x.Comments.OrderByDescending(c => c.Id))
                                          .Include(x => x.Imgs)
                                          .Include(x => x.UpVotes)
                                          .Include(x => x.DownVotes)
@@ -183,6 +183,7 @@ namespace devblog.Services
         public async Task Delete(int postId)
         {
             var post = await Get(postId);
+            await _notifications.DeleteAllForPost(postId);
             _db.Remove(post);
             await _db.SaveChangesAsync();
         }

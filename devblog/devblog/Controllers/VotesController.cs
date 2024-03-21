@@ -1,6 +1,7 @@
 ﻿using devblog.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
 
 namespace devblog.Controllers
 {
@@ -46,10 +47,13 @@ namespace devblog.Controllers
         /// <returns>Number of votes for post</returns>
         [Authorize]
         [HttpPost("{id}/upvote")]
-        public async Task<int> UpVote(int id, [FromBody] string username)
+        public async Task<VoteCount> UpVote(int id)
         {
-            var vote = await _votes.UpVote(id, username);
-            return vote;
+            var username = User.FindFirstValue("userName");
+            var upVotes = await _votes.UpVote(id, username);
+            var downVotes = await _votes.GetDownVotesForPost(id);
+            VoteCount voteCount = new VoteCount(upVotes, downVotes);
+            return voteCount;
         }
 
         /// <summary>
@@ -59,10 +63,24 @@ namespace devblog.Controllers
         /// <returns>Number of votes for post</returns>
         [Authorize]
         [HttpPost("{id}/downvote")]
-        public async Task<int> DownVote(int id, [FromBody] string username)
+        public async Task<VoteCount> DownVote(int id)
         {
-            var vote = await _votes.DownVote(id, username);
-            return vote;
+            var username = User.FindFirstValue("userName");
+            var downVotes = await _votes.DownVote(id, username);
+            var upVotes = await _votes.GetUpVotesForPost(id);
+            VoteCount voteCount = new VoteCount(upVotes, downVotes);
+            return voteCount;
+        }
+
+        public class VoteCount
+        {
+            public int Up { get; set; }
+            public int Down { get; set; }
+            public VoteCount(int up, int down)
+            {
+                Up = up; 
+                Down = down;
+            }
         }
     }
 }

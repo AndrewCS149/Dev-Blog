@@ -43,7 +43,7 @@ const Posts = () => {
 
     // get all posts for a specific page
     useEffect(() => {
-        fetch(`api/posts/page/${pageNum}`)
+        fetch(`api/posts/?page=${pageNum}`)
             .then((res) => { return res.json(); })
             .then((data) => setPosts(data))
             .catch((e) => console.log("Error retrieving posts: " + e))
@@ -66,13 +66,13 @@ const Posts = () => {
 
     useEffect(() => {
         setIsAdmin(GetIsAdmin);
-        fetch("api/posts/page/count")
+        fetch("api/posts/countPages")
             .then((res) => { return res.json(); })
             .then((data) => {
                 setTotalPages(data)
             }).catch((e) => console.log("Error retrieving page count: " + e));
 
-        fetch("api/posts/count")
+        fetch("api/posts/countPosts")
             .then((res) => { return res.json(); })
             .then((data) => {
                 setTotalPosts(data)

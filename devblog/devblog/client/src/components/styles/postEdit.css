@@ -1,0 +1,25 @@
+div:root {
+    padding-left: 5;
+}
+
+.edit-post-btn svg:hover {
+    cursor: pointer;
+    fill: greenyellow;
+
+}
+
+.edit-post-btn svg {
+    height: 15;
+}
+
+.edit-post-description {
+    height: 125px;
+    width: 100%;
+}
+
+.edit-post>form>button {
+    display: inline;
+    margin-right: 10px;
+    margin-top: 5px;
+    padding: 5px;
+}

@@ -1,0 +1,45 @@
+.post {
+    border-radius: .5em;
+    margin: auto;
+    margin-bottom: 1.5em;
+    padding: 1em;
+    width: 90%;
+}
+
+.post>div {
+    margin: auto;
+    width: 95%;
+}
+
+.hide-comment:nth-child(n + 6) {
+    display: none;
+}
+
+.post-info {
+    display: flex;
+    padding-bottom: 10px;
+}
+
+.post-info>span:first-child {
+    font-family: 'Chivo Mono', monospace;
+}
+
+.post-info span:last-child {
+    margin-left: auto;
+}
+
+.show-all-comments-btn {
+    margin-top: 5;
+    padding: 12;
+    width: 100%;
+}
+
+img {
+    border-radius: .5em;
+    width: 100%;
+    max-width: 900px;
+}
+
+.description {
+    margin: auto;
+}

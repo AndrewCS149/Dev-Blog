@@ -13,6 +13,7 @@ const SignIn = () => {
 
     const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault();
+        console.log(JSON.stringify({ userName, password }));
 
         fetch(`api/accounts/signin`, {
             method: "POST",

@@ -8,9 +8,11 @@ namespace devblog.Services
     public class CommentService : ICommentService
     {
         private readonly AppDbContext _db;
+        private readonly INotificationService _notifications;
 
-        public CommentService(AppDbContext db)
+        public CommentService(AppDbContext db, INotificationService notifications)
         {
+            _notifications = notifications;
             _db = db;
         }
 
@@ -32,6 +34,7 @@ namespace devblog.Services
 
             _db.Comment.Add(newComment);
             await _db.SaveChangesAsync();
+            await _notifications.CreateNewCommentNotification(postId, userName);
 
             return newComment;
         }

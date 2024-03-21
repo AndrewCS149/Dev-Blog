@@ -7,6 +7,11 @@
         public string Content { get; set; }
         public DateTime Date { get; private set; }
         public string UserName { get; set; }
-        public Comment() => Date = DateTime.UtcNow;
+        public Comment()
+        {
+            DateTime dateTime = DateTime.UtcNow;
+            string dateTimeStr = dateTime.ToString("yyyy-MM-ddTHH:mm:ss.fff");
+            Date = DateTime.Parse(dateTimeStr);
+        }
     }
 }

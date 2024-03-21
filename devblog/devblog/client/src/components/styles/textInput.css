@@ -1,0 +1,12 @@
+div:root {
+    display: flex;
+    flex-direction: column;
+    padding: 5px;
+}
+
+input {
+    background-color: var(--background-base);
+    border: 1px solid var(--button-border);
+    border-radius: 2px;
+    height: 30;
+}

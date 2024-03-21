@@ -55,7 +55,7 @@ const Home = () => {
         getUserInfo();
 
 
-        fetch("api/posts/count")
+        fetch("api/posts/countPosts")
             .then((res) => { return res.json(); })
             .then((data) => {
                 setTotalPosts(data)

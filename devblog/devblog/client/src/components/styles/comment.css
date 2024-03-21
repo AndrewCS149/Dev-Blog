@@ -1,0 +1,32 @@
+.comment {
+    border-radius: .5em;
+    display: "flex";
+    margin-bottom: .25em;
+    padding: .3em;
+}
+
+.comment-info {
+    align-items: center;
+    display: flex;
+    padding: 5px 5px 0px 5px;
+}
+
+.comment p {
+    padding-left: 5px;
+    word-wrap: break-word;
+    width: 85%;
+}
+
+.comment-info .date {
+    margin-left: auto;
+    display: flex;
+}
+
+.comment-info>span:first-child,
+.comment-info .date {
+    font-size: 0.85em;
+}
+
+.comment-info span:first-child {
+    margin-right: 5px;
+}

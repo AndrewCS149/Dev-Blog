@@ -1,0 +1,16 @@
+.sign-in-container {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-top: 150px;
+}
+
+.sign-in-container button {
+    margin-top: 1em;
+    padding: 10px;
+}
+
+.sign-in-container>p {
+    color: red;
+}

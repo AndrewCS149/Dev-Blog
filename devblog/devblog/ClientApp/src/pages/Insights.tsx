@@ -13,7 +13,7 @@ const Insights = () => {
     const [subscribedUsers, setSubscribedUsers] = useState<number>(0);
 
     const getUsers = async () => {
-        await fetch("api/accounts/count", {
+        await fetch("api/accounts", {
             method: "GET",
             headers: { "Authorization": `Bearer ${localStorage.getItem("token")}` }
         }).then((res) => { return res.json(); })
@@ -32,7 +32,7 @@ const Insights = () => {
         const shouldDelete = window.confirm(`Are you sure you would like to delete user ${userName}?`);
 
         if (shouldDelete) {
-            await fetch(`api/accounts/admin/${userName}`, {
+            await fetch(`api/accounts/adminDelete/${userName}`, {
                 method: "DELETE",
                 headers: {
                     "Content-Type": "application/json",

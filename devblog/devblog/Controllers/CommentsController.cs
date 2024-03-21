@@ -54,8 +54,9 @@ namespace devblog.Controllers
         [HttpGet("posts/{postId}")]
         public async Task<List<Comment>> Get(int postId)
         {
-            var posts = await _posts.Get(postId);
-            return posts.Comments != null ? posts.Comments : new List<Comment>();
+            var post = await _posts.Get(postId);
+            var comments = post.Comments.OrderByDescending(c => c.Id).ToList();
+            return comments != null ? comments : new List<Comment>();
         }
 
         /// <summary>

@@ -36,7 +36,7 @@ namespace devblog.Controllers
         [HttpPut("{id}")]
         public async Task<YtVideo> Set([FromBody] string url)
         {
-            var video = await _video.Update(url);
+              var video = await _video.Update(url);
             return video;
         }
     }
